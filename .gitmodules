@@ -1,9 +1,6 @@
 [submodule "libs/Telegram-PHP"]
 	path = libs/Telegram-PHP
 	url = https://github.com/duhow/Telegram-PHP
-[submodule "libs/monolog"]
-	path = libs/monolog
-	url = https://github.com/Seldaek/monolog.git
-[submodule "libs/Propel2"]
-	path = libs/Propel2
-	url = https://github.com/propelorm/Propel2.git
+[submodule "libs/PHP-MySQLi-Database-Class"]
+	path = libs/PHP-MySQLi-Database-Class
+	url = https://github.com/joshcam/PHP-MySQLi-Database-Class
