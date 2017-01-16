@@ -5,7 +5,7 @@ namespace TelegramApp;
 class Core {
 
 	function __construct(){
-		$this->base_folder = dirname(__FILE__) ."../app/";
+		$this->base_folder = dirname(__FILE__) ."/../app/";
 	}
 
 	private $loaded = array();
