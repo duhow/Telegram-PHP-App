@@ -22,7 +22,7 @@ class Module {
 			if(strpos($cmd, "@") !== FALSE){
 				$cmd = substr($cmd, 0, strpos($cmd, "@"));
 			}
-			if(in_array($cmd, ["run", "hooks", "end"])){ return $this->hooks(); }
+			if(in_array($cmd, ["run", "hooks", "end"]) or substr($cmd, 0, 1) == "_"){ return $this->hooks(); }
 			if(method_exists($this, $cmd)){
 				$parms = array();
 				if($this->telegram->words() > 1){
