@@ -97,13 +97,15 @@ class Core {
 		if($this->exists($name)){
 			if(is_readable($file)){
 				$ret = include_once $file;
-				call_user_func("$name::setTelegram", $this->telegram);
+				$GLOBALS[$name] = new $name();
+
+				$GLOBALS[$name]->setTelegram($this->telegram);
 				if(!empty($this->db)){
-					call_user_func("$name::setDB", $this->db);
+					$GLOBALS[$name]->setDB($this->db);
 				}
 
 				if($run){
-					call_user_func("$name::run");
+					$GLOBALS[$name]->run();
 				}
 
 				$this->loaded[] = $name;

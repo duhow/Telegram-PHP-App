@@ -26,6 +26,6 @@ if($config['mysql']['enable']){
 }
 
 $core->load('Main');
-Main::run();
+$Main->run();
 
 ?>

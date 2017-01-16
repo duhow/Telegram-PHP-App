@@ -3,32 +3,32 @@
 namespace TelegramApp;
 
 class Module {
-	protected static $telegram;
-	protected static $db;
+	protected $telegram;
+	protected $db;
 
 	public function __construct($tg = NULL, $db = NULL){
-		if(!empty($tg)){ self::setTelegram($tg); }
-		if(!empty($db)){ self::setDB($db); }
+		if(!empty($tg)){ $this->setTelegram($tg); }
+		if(!empty($db)){ $this->setDB($db); }
 	}
 
-	function hooks(){
+	protected function hooks(){
 
 	}
 
 	public function run(){
-		self::hooks();
+		$this->hooks();
 	}
 
-	private function end(){
+	protected function end(){
 		die();
 	}
 
 	public function setTelegram($tg){
-		self::$telegram = $tg;
+		$this->telegram = $tg;
 	}
 
 	public function setDB($db){
-		self::$db = $db;
+		$this->db = $db;
 	}
 }
 
