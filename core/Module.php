@@ -16,7 +16,24 @@ class Module {
 	}
 
 	public function run(){
-		$this->hooks();
+		if(!empty($this->telegram) && $this->telegram->text_command()){
+			$cmd = $this->telegram->text_command();
+			$cmd = substr($cmd, 1);
+			if(strpos($cmd, "@") !== FALSE){
+				$cmd = substr($cmd, 0, strpos($cmd, "@"));
+			}
+			if(in_array($cmd, ["run", "hooks", "end"])){ return $this->hooks(); }
+			if(method_exists($this, $cmd)){
+				$parms = array();
+				if($this->telegram->words() > 1){
+					$parms = $this->telegram->words(TRUE);
+					array_shift($parms);
+				}
+				call_user_func_array([$this, $cmd], $parms);
+			}
+		}else{
+			$this->hooks();
+		}
 	}
 
 	protected function end(){
