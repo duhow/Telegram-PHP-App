@@ -1,10 +1,10 @@
 <?php
 
 $config['telegram'] = [
-	'id'	=> 0,
-	'key'	=> 'YOUR API KEY',
-	'user'	=> 'MyNameBot',
-	'name'	=> 'James Bot'
+	'id'			=> 0,
+	'key'			=> 'YOUR API KEY',
+	'username'		=> 'MyNameBot',
+	'first_name'	=> 'James Bot'
 ];
 
 $config['mysql'] = [
