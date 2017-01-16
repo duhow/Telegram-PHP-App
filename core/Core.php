@@ -5,11 +5,11 @@ namespace TelegramApp;
 class Core {
 
 	function __construct(){
-		// ?
+		$this->base_folder = dirname(__FILE__) ."../app/";
 	}
 
 	private $loaded = array();
-	private $base_folder = dirname(__FILE__) ."../app/";
+	private $base_folder = NULL;
 	private $telegram = NULL;
 	private $db = NULL;
 
