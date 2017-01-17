@@ -5,6 +5,7 @@ namespace TelegramApp;
 class Module {
 	protected $telegram;
 	protected $db;
+	protected $core;
 	protected $runCommands = TRUE;
 
 	public function __construct($tg = NULL, $db = NULL){
@@ -47,6 +48,10 @@ class Module {
 
 	public function setDB($db){
 		$this->db = $db;
+	}
+
+	public function setCore($core){
+		$this->core = $core;
 	}
 }
 

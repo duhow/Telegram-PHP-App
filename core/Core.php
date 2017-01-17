@@ -100,6 +100,7 @@ class Core {
 				$GLOBALS[$name] = new $name();
 
 				$GLOBALS[$name]->setTelegram($this->telegram);
+				$GLOBALS[$name]->setCore($this);				
 				if(!empty($this->db)){
 					$GLOBALS[$name]->setDB($this->db);
 				}
