@@ -5,6 +5,7 @@ namespace TelegramApp;
 class Module {
 	protected $telegram;
 	protected $db;
+	protected $runCommands = TRUE;
 
 	public function __construct($tg = NULL, $db = NULL){
 		if(!empty($tg)){ $this->setTelegram($tg); }
@@ -16,7 +17,7 @@ class Module {
 	}
 
 	public function run(){
-		if(!empty($this->telegram) && $this->telegram->text_command()){
+		if(!empty($this->telegram) && $this->telegram->text_command() && $this->runCommands == TRUE){
 			$cmd = $this->telegram->text_command();
 			$cmd = substr($cmd, 1);
 			if(strpos($cmd, "@") !== FALSE){
