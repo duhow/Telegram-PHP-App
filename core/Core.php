@@ -85,6 +85,7 @@ class Core {
 
 		foreach($files as $f){
 			if(!$this->is_loaded($f)){
+				$f = str_replace(".php", "", $f);
 				$load = $this->load($f);
 				if($load === -1){ die(); }
 			}
@@ -92,6 +93,7 @@ class Core {
 	}
 
 	function load($name, $run = FALSE){
+		if($this->is_loaded($name)){ return $GLOBALS[$name]; }
 		$file = $this->file($name);
 
 		if($this->exists($name)){
@@ -100,7 +102,7 @@ class Core {
 				$GLOBALS[$name] = new $name();
 
 				$GLOBALS[$name]->setTelegram($this->telegram);
-				$GLOBALS[$name]->setCore($this);				
+				$GLOBALS[$name]->setCore($this);
 				if(!empty($this->db)){
 					$GLOBALS[$name]->setDB($this->db);
 				}
