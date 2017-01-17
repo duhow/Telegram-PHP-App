@@ -1,11 +1,6 @@
 <?php
 
 class Main extends TelegramApp\Module {
-
-	function __construct(){
-		parent::__construct();
-	}
-
 	function hooks(){
 		if($this->telegram->text_has(["hi", "hello"])){
 			$this->_hello_world();
