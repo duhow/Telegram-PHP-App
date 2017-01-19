@@ -7,6 +7,7 @@ define('CREATOR', $config['creator']);
 require 'libs/Telegram-PHP/src/Autoloader.php';
 require 'core/Core.php';
 require 'core/Module.php';
+require 'core/Functions.php';
 require 'core/User.php';
 require 'core/Chat.php';
 
