@@ -101,8 +101,12 @@ class Core {
 				$ret = include_once $file;
 				$GLOBALS[$name] = new $name();
 
-				$GLOBALS[$name]->setTelegram($this->telegram);
-				$GLOBALS[$name]->setCore($this);
+				if($GLOBALS[$name] instanceof Module){
+					$GLOBALS[$name]->setTelegram($this->telegram);
+					$GLOBALS[$name]->setCore($this);
+				}elseif($GLOBALS[$name] instanceof User){
+					$GLOBALS[$name] = new $name($this->telegram->user);
+				}
 				if(!empty($this->db)){
 					$GLOBALS[$name]->setDB($this->db);
 				}
