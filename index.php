@@ -28,7 +28,6 @@ if($config['mysql']['enable']){
 	$core->setDB($mysql);
 }
 
-$core->load('Main');
-$Main->run();
+$core->load('Main', TRUE);
 
 ?>
