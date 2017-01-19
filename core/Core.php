@@ -107,6 +107,9 @@ class Core {
 				if($GLOBALS[$name] instanceof Module){
 					$GLOBALS[$name]->setTelegram($this->telegram);
 					$GLOBALS[$name]->setCore($this);
+				}elseif($GLOBALS[$name] instanceof Functions){
+					$name::setTelegram($this->telegram);
+					$name::setDB($this->db);					
 				}elseif($GLOBALS[$name] instanceof User){
 					$GLOBALS[$name] = new $name($this->telegram->user);
 				}
