@@ -7,6 +7,8 @@ $config['telegram'] = [
 	'first_name'	=> 'James Bot'
 ];
 
+$config['creator'] = 0; // Telegram User ID of owner
+
 $config['mysql'] = [
 	'host'		=> 'localhost',
 	'username'	=> 'mysql',
