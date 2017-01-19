@@ -93,7 +93,10 @@ class Core {
 	}
 
 	function load($name, $run = FALSE){
-		if($this->is_loaded($name)){ return $GLOBALS[$name]; }
+		if($this->is_loaded($name)){
+			if($run && $GLOBALS[$name] instanceof Module){ return $GLOBALS[$name]->run(); }
+			return $GLOBALS[$name];
+		}
 		$file = $this->file($name);
 
 		if($this->exists($name)){
