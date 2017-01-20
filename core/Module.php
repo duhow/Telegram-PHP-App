@@ -6,6 +6,7 @@ class Module {
 	protected $telegram;
 	protected $db;
 	protected $core;
+	protected $user;
 	protected $runCommands = TRUE;
 
 	public function __construct($tg = NULL, $db = NULL){
@@ -52,6 +53,10 @@ class Module {
 
 	public function setCore($core){
 		$this->core = $core;
+	}
+
+	public function setUser($user){
+		$this->user = $user;
 	}
 }
 

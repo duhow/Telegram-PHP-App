@@ -11,6 +11,7 @@ class Core {
 	private $loaded = array();
 	private $base_folder = NULL;
 	private $telegram = NULL;
+	private $user = NULL;
 	private $db = NULL;
 
 	function is_loaded($name){
@@ -107,9 +108,11 @@ class Core {
 				if($GLOBALS[$name] instanceof Module){
 					$GLOBALS[$name]->setTelegram($this->telegram);
 					$GLOBALS[$name]->setCore($this);
+					$GLOBALS[$name]->setUser($this->user);
 				}elseif($GLOBALS[$name] instanceof Functions){
 					$name::setTelegram($this->telegram);
-					$name::setDB($this->db);					
+					$name::setDB($this->db);
+					$name::setUser($this->user);
 				}elseif($GLOBALS[$name] instanceof User){
 					$GLOBALS[$name] = new $name($this->telegram->user);
 				}
@@ -137,6 +140,11 @@ class Core {
 
 	function setDB($db){
 		$this->db = $db;
+		return $this;
+	}
+
+	function setUser($user){
+		$this->user = $user;
 		return $this;
 	}
 }

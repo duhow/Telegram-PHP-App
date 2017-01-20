@@ -29,6 +29,8 @@ if($config['mysql']['enable']){
 	$core->setDB($mysql);
 }
 
+// $core->load('User');
+// $core->setUser($tg->user);
 $core->load('Main', TRUE);
 
 ?>
