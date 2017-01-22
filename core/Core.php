@@ -115,6 +115,7 @@ class Core {
 					$name::setUser($this->user);
 				}elseif($GLOBALS[$name] instanceof User){
 					$GLOBALS[$name] = new $name($this->telegram->user);
+					// $this->user = $GLOBALS[$name];
 				}
 				if(!empty($this->db)){
 					$GLOBALS[$name]->setDB($this->db);
