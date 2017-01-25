@@ -40,6 +40,11 @@ class User {
 	public function load(){}
 
 	public function setDB($db){
-		$this->db = $db;
+		return $this->setVar('db', $db);
+	}
+
+	public function setVar($key, $value){
+		$this->$key = $value;
+		return $this;
 	}
 }

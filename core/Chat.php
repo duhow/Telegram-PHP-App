@@ -4,6 +4,8 @@ namespace TelegramApp;
 
 class Chat {
 	public $id = NULL;
+	public $telegram = NULL;
+	protected $db;
 	protected $extra = array();
 	protected $loaded = FALSE;
 
@@ -35,4 +37,11 @@ class Chat {
 
 	protected function update($key, $value){}
 	public function load(){}
+
+	public function setVar($key, $value){
+		$this->$key = $value;
+		return $this;
+	}
+
+	public function setDB($db){	return $this->setVar('db', $db); }
 }

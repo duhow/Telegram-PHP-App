@@ -10,9 +10,7 @@ class Core {
 
 	private $loaded = array();
 	private $base_folder = NULL;
-	private $telegram = NULL;
-	private $user = NULL;
-	private $db = NULL;
+	private $inherits = array();
 
 	function is_loaded($name){
 		$name = str_replace(".php", "", $name);
@@ -106,9 +104,11 @@ class Core {
 				$GLOBALS[$name] = new $name();
 
 				if($GLOBALS[$name] instanceof Module){
-					$GLOBALS[$name]->setTelegram($this->telegram);
+					foreach($this->inherits as $name => $val){ $GLOBALS[$name]->setVar($name, $val); }
+					/* $GLOBALS[$name]->setTelegram($this->telegram);
 					$GLOBALS[$name]->setCore($this);
 					$GLOBALS[$name]->setUser($this->user);
+					$GLOBALS[$name]->setChat($this->chat); */
 				}elseif($GLOBALS[$name] instanceof Functions){
 					$name::setTelegram($this->telegram);
 					$name::setDB($this->db);
@@ -116,9 +116,12 @@ class Core {
 				}elseif($GLOBALS[$name] instanceof User){
 					$GLOBALS[$name] = new $name($this->telegram->user);
 					// $this->user = $GLOBALS[$name];
+				}elseif($GLOBALS[$name] instanceof Chat){
+					$GLOBALS[$name] = new $name($this->telegram->chat);
+
 				}
 				if(!empty($this->db)){
-					$GLOBALS[$name]->setDB($this->db);
+					$GLOBALS[$name]->setVar('db', $this->db);
 				}
 
 				if($run){
@@ -134,20 +137,14 @@ class Core {
 		return FALSE;
 	}
 
-	function setTelegram($tg){
-		$this->telegram = $tg;
+	public function addInherit($key, $value){
+		$this->inherits[$key] = $value;
 		return $this;
 	}
 
-	function setDB($db){
-		$this->db = $db;
-		return $this;
-	}
-
-	function setUser($user){
-		$this->user = $user;
-		return $this;
-	}
+	function setTelegram($tg){ return $this->addInherit('telegram', $tg); }
+	function setDB($db){ return $this->addInherit('db', $db); }
+	function setUser($user){ return $this->addInherit('user', $user); }
 }
 
 ?>

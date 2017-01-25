@@ -43,21 +43,15 @@ class Module {
 		die();
 	}
 
-	public function setTelegram($tg){
-		$this->telegram = $tg;
+	public function setVar($key, $value){
+		$this->$key = $value;
+		return $this;
 	}
 
-	public function setDB($db){
-		$this->db = $db;
-	}
-
-	public function setCore($core){
-		$this->core = $core;
-	}
-
-	public function setUser($user){
-		$this->user = $user;
-	}
+	public function setTelegram($tg){ return $this->setVar('telegram', $tg); }
+	public function setDB($db){ return $this->setVar('db', $db); }
+	public function setCore($core){ return $this->setVar('core', $core); }
+	public function setUser($user){ return $this->setVar('user', $user); }
 }
 
 ?>

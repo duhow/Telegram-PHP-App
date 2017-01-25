@@ -21,8 +21,17 @@ $tg = new Telegram\Receiver($bot);
 $core = new TelegramApp\Core();
 $core->setTelegram($tg);
 
-// $core->load('User');
-// $User = new User($tg->user);
+if(file_exists('app/User.php')){
+	$core->load('User');
+	$User = new User($tg->user);
+	$core->addInherit('user', $User);
+}
+
+if(file_exists('app/Chat.php')){
+	$core->load('Chat');
+	$Chat = new Chat($tg->chat);
+	$core->addInherit('chat', $Chat);
+}
 
 if($config['mysql']['enable']){
 	require 'libs/PHP-MySQLi-Database-Class/MysqliDb.php';
@@ -30,10 +39,10 @@ if($config['mysql']['enable']){
 
 	$mysql = new MysqliDb($config['mysql']);
 	$core->setDB($mysql);
-	// $User->setDB($mysql);
+	if($core->is_loaded('User')){ $User->setDB($mysql); }
+	if($core->is_loaded('Chat')){ $Chat->setDB($mysql); }
 }
 
-// $core->setUser($User);
 $core->load('Main', TRUE);
 
 ?>
