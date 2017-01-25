@@ -104,21 +104,20 @@ class Core {
 				$GLOBALS[$name] = new $name();
 
 				if($GLOBALS[$name] instanceof Module){
-					foreach($this->inherits as $name => $val){ $GLOBALS[$name]->setVar($name, $val); }
-					/* $GLOBALS[$name]->setTelegram($this->telegram);
+					foreach($this->inherits as $key => $val){ $GLOBALS[$name]->setVar($key, $val); }
 					$GLOBALS[$name]->setCore($this);
-					$GLOBALS[$name]->setUser($this->user);
-					$GLOBALS[$name]->setChat($this->chat); */
 				}elseif($GLOBALS[$name] instanceof Functions){
-					$name::setTelegram($this->telegram);
-					$name::setDB($this->db);
-					$name::setUser($this->user);
+					if(isset($this->inherits['telegram'])){ $name::setTelegram($this->inherits['telegram']); }
+					if(isset($this->inherits['db'])){ $name::setDB($this->inherits['db']); }
+					if(isset($this->inherits['user'])){ $name::setUser($this->inherits['user']); }
 				}elseif($GLOBALS[$name] instanceof User){
-					$GLOBALS[$name] = new $name($this->telegram->user);
-					// $this->user = $GLOBALS[$name];
+					if(isset($this->inherits['telegram'])){
+						$GLOBALS[$name] = new $name($this->inherits['telegram']->user);
+					}
 				}elseif($GLOBALS[$name] instanceof Chat){
-					$GLOBALS[$name] = new $name($this->telegram->chat);
-
+					if(isset($this->inherits['telegram'])){
+						$GLOBALS[$name] = new $name($this->inherits['telegram']->chat);
+					}
 				}
 				if(!empty($this->db)){
 					$GLOBALS[$name]->setVar('db', $this->db);
