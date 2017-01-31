@@ -38,6 +38,10 @@ class Chat {
 	protected function update($key, $value){}
 	public function load(){}
 
+	public function is_group(){
+		return ($this->type != "private");
+	}
+
 	public function setVar($key, $value){
 		$this->$key = $value;
 		return $this;

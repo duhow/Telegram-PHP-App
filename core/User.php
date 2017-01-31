@@ -39,12 +39,10 @@ class User {
 	protected function update($key, $value){}
 	public function load(){}
 
-	public function setDB($db){
-		return $this->setVar('db', $db);
-	}
-
 	public function setVar($key, $value){
 		$this->$key = $value;
 		return $this;
 	}
+
+	public function setDB($db){	return $this->setVar('db', $db); }
 }

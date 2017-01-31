@@ -119,11 +119,11 @@ class Core {
 						$GLOBALS[$name] = new $name($this->inherits['telegram']->chat);
 					}
 				}
-				if(!empty($this->db)){
-					$GLOBALS[$name]->setVar('db', $this->db);
+				if(isset($this->inherits['db'])){
+					$GLOBALS[$name]->setVar('db', $this->inherits['db']);
 				}
 
-				if($run){
+				if($run && $GLOBALS[$name] instanceof Module){
 					$GLOBALS[$name]->run();
 				}
 
