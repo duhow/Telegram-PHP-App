@@ -15,7 +15,7 @@ class Functions {
 
 	// TODO
 	public function setVar($key, $value){
-		self::$key = $value;
+		self::${$key} = $value;
 	}
 
 	public function setTelegram($tg){ return self::setVar('telegram', $tg); }
