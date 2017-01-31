@@ -13,21 +13,15 @@ class Functions {
 		if(!empty($db)){ self::setDB($db); }
 	}
 
-	public function setTelegram($tg){
-		self::$telegram = $tg;
+	// TODO
+	public function setVar($key, $value){
+		self::$key = $value;
 	}
 
-	public function setDB($db){
-		self::$db = $db;
-	}
-
-	public function setCore($core){
-		self::$core = $core;
-	}
-
-	public function setUser($user){
-		self::$user = $user;
-	}
+	public function setTelegram($tg){ return self::setVar('telegram', $tg); }
+	public function setDB($db){ return self::setVar('db', $db); }
+	public function setCore($core){ return self::setVar('core', $core); }
+	public function setUser($user){ return self::setVar('user', $user); }
 }
 
 ?>

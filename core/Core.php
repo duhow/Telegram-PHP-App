@@ -119,7 +119,8 @@ class Core {
 						$GLOBALS[$name] = new $name($this->inherits['telegram']->chat);
 					}
 				}
-				if(isset($this->inherits['db'])){
+				// Common except for Functions
+				if(isset($this->inherits['db']) && !($GLOBALS[$name] instanceof Functions)){
 					$GLOBALS[$name]->setVar('db', $this->inherits['db']);
 				}
 
