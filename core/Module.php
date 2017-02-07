@@ -14,28 +14,37 @@ class Module {
 		if(!empty($db)){ $this->setDB($db); }
 	}
 
-	protected function hooks(){
-
-	}
+	protected function hooks(){}
 
 	public function run(){
-		if(!empty($this->telegram) && $this->telegram->text_command() && $this->runCommands == TRUE){
-			$cmd = $this->telegram->text_command();
-			$cmd = substr($cmd, 1);
-			if(strpos($cmd, "@") !== FALSE){
-				$cmd = substr($cmd, 0, strpos($cmd, "@"));
-			}
-			if(in_array($cmd, ["run", "hooks", "end"]) or substr($cmd, 0, 1) == "_"){ return $this->hooks(); }
-			if(method_exists($this, $cmd)){
-				$parms = array();
-				if($this->telegram->words() > 1){
-					$parms = $this->telegram->words(TRUE);
-					array_shift($parms);
+		if(!empty($this->telegram)){
+			if($this->telegram->data_received("new_chat_members")){
+				if(method_exists($this, "new_member")){
+					foreach($this->telegram->new_users as $u){
+						$user = (class_exists("User") ? new User($u) : $u);
+						$this->new_member($user);
+					}
+					$this->end(); // HACK ?
 				}
-				call_user_func_array([$this, $cmd], $parms);
+				return $this->hooks();
+			}elseif($this->telegram->text_command() && $this->runCommands == TRUE){
+				$cmd = $this->telegram->text_command();
+				$cmd = substr($cmd, 1);
+				if(strpos($cmd, "@") !== FALSE){
+					$cmd = substr($cmd, 0, strpos($cmd, "@"));
+				}
+				if(in_array($cmd, ["run", "hooks", "end", "new_member"]) or substr($cmd, 0, 1) == "_"){ return $this->hooks(); }
+				if(method_exists($this, $cmd)){
+					$parms = array();
+					if($this->telegram->words() > 1){
+						$parms = $this->telegram->words(TRUE);
+						array_shift($parms);
+					}
+					return call_user_func_array([$this, $cmd], $parms);
+				}
 			}
 		}else{
-			$this->hooks();
+			return $this->hooks();
 		}
 	}
 
