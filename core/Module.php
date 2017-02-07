@@ -26,7 +26,6 @@ class Module {
 					}
 					$this->end(); // HACK ?
 				}
-				return $this->hooks();
 			}elseif($this->telegram->text_command() && $this->runCommands == TRUE){
 				$cmd = $this->telegram->text_command();
 				$cmd = substr($cmd, 1);
@@ -43,9 +42,8 @@ class Module {
 					return call_user_func_array([$this, $cmd], $parms);
 				}
 			}
-		}else{
-			return $this->hooks();
 		}
+		return $this->hooks();
 	}
 
 	protected function end(){
