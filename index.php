@@ -43,6 +43,20 @@ if($config['mysql']['enable']){
 	if($core->is_loaded('Chat')){ $Chat->setDB($mysql); }
 }
 
+if($config['tracking'] !== FALSE){
+	require 'core/Tracking.php';
+	$track = ['name' => key($config['tracking']), 'token' => current($config['tracking'])];
+	if(!file_exists("core/Tracking/" .$track['name'] .".php")){
+		die("Tracking core does not exist.");
+	}
+	require "core/Tracking/" .$track['name'] .".php";
+
+	$Tracking = new Tracking\$track['name']($track['token']);
+	$Tracking->setTelegram($tg);
+	$core->addInherit('tracking', $Tracking);
+	unset($track);
+}
+
 $core->load('Main', TRUE);
 
 ?>

@@ -21,4 +21,7 @@ $config['mysql'] = [
 
 $config['mysql']['enable'] = TRUE;
 
+$config['tracking'] = FALSE;
+// $config['tracking'] = ['Botan' => 'API KEY'];
+
 ?>
