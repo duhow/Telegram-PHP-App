@@ -51,7 +51,7 @@ if($config['tracking'] !== FALSE){
 	}
 	require 'core/Tracking/' .$track['name'] .'.php';
 
-	$class = 'Tracking\\' .$track['name'];
+	$class = 'TelegramApp\\Tracking\\' .$track['name'];
 	$Tracking = new $class($track['token']);
 	$Tracking->setTelegram($tg);
 	$core->addInherit('tracking', $Tracking);

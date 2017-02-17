@@ -2,7 +2,7 @@
 
 namespace TelegramApp\Tracking;
 
-class Botan extends TelegramApp\Tracking {
+class Botan extends \TelegramApp\Tracking {
     protected $url_base = "https://api.botan.io/track?token=#TOKEN&uid=#UID&name=#ACTION";
 
     public function track($action = "Message"){
