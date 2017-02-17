@@ -46,15 +46,16 @@ if($config['mysql']['enable']){
 if($config['tracking'] !== FALSE){
 	require 'core/Tracking.php';
 	$track = ['name' => key($config['tracking']), 'token' => current($config['tracking'])];
-	if(!file_exists("core/Tracking/" .$track['name'] .".php")){
-		die("Tracking core does not exist.");
+	if(!file_exists('core/Tracking/' .$track['name'] .'.php')){
+		die('Tracking core does not exist.');
 	}
-	require "core/Tracking/" .$track['name'] .".php";
+	require 'core/Tracking/' .$track['name'] .'.php';
 
-	$Tracking = new Tracking\$track['name']($track['token']);
+	$class = 'Tracking\\' .$track['name'];
+	$Tracking = new $class($track['token']);
 	$Tracking->setTelegram($tg);
 	$core->addInherit('tracking', $Tracking);
-	unset($track);
+	unset($track); unset($class);
 }
 
 $core->load('Main', TRUE);
