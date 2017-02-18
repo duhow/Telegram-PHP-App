@@ -3,7 +3,7 @@
 namespace TelegramApp\Tracking;
 
 class GA extends \TelegramApp\Tracking {
-    protected $url_base = "http://www.google-analytics.com/collect";
+	protected $url_base = "http://www.google-analytics.com/collect";
 	private $content = array();
 	private $_version = 1;
 
@@ -16,16 +16,54 @@ class GA extends \TelegramApp\Tracking {
 		$this->content = array();
 		$this->content['v'] = $this->_version;
 		$this->content['tid'] = $this->token;
+		$this->source('app');
 	}
 
 	private function set($key, $value, $optional = FALSE){
-		if($optional && $value !== NULL){ $this->content[$key] = $value; }
+		if(($optional && $value !== NULL) or !$optional){ $this->content[$key] = $value; }
 		return $this;
 	}
 
 	public function user($id = NULL){
 		if(empty($id) && !empty($this->telegram)){ $id = $this->telegram->user->id; }
 		$this->set('cid', $id);
+		return $this;
+	}
+
+	public function user_anonymous(){
+		return $this->set('aip', 1);
+	}
+
+	public function user_override($ip, $useragent){
+		$this
+			->set('uip', $ip, TRUE)
+			->set('ua', $useragent, TRUE);
+		return $this;
+	}
+
+	public function source($data = NULL){
+		return $this->set('ds', $data);
+	}
+
+	public function country($data = NULL){
+		return $this->set('geoid', $data);
+	}
+
+	public function campaign($name = NULL, $source = NULL, $medium = NULL, $keyword = NULL, $content = NULL, $id = NULL){
+		$this
+			->set('cn', $name, TRUE)
+			->set('cs', $source, TRUE)
+			->set('cm', $medium, TRUE)
+			->set('ck', $keyword, TRUE)
+			->set('cc', $content, TRUE)
+			->set('ci', $id, TRUE);
+		return $this;
+	}
+
+	public function ads($adwords = NULL, $display = NULL){
+		$this
+			->set('gclid', $adwords, TRUE)
+			->set('dclid', $display, TRUE);
 		return $this;
 	}
 
@@ -87,19 +125,12 @@ class GA extends \TelegramApp\Tracking {
 		return $this->track(TRUE);
 	}
 
-	public function user_override($ip, $useragent){
-		$this
-			->set('uip', $ip, TRUE)
-			->set('ua', $useragent, TRUE);
-		return $this;
-	}
-
 	public function non_interaction($value = NULL){
 		$this->set('ni', $value);
 		return $this;
 	}
 
-    public function track($action = "Message"){
+	public function track($action = "Message", $category = "Telegram"){
 		// if(!isset($this->content['tid']) or empty($this->content['tid'])){ return FALSE; }
 		if(!isset($this->content['cid']) or empty($this->content['cid'])){
 			$cid = (!empty($this->telegram) ? $this->telegram->user->id : mt_rand(0, 10000000));
@@ -107,7 +138,7 @@ class GA extends \TelegramApp\Tracking {
 		}
 
 		if($action !== TRUE && is_string($action)){
-			return $this->event("Telegram", $action);
+			return $this->event($category, $action);
 		}
 
 		$data = http_build_query($this->content);
@@ -118,7 +149,7 @@ class GA extends \TelegramApp\Tracking {
 		curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch,CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 		//execute post
 		$result = curl_exec($ch);
