@@ -31,6 +31,20 @@ if($config['log']){
 	unset($log, $set, $fp);
 }
 
+if(file_exists("blacklist.txt") && is_readable("blacklist.txt")){
+	$users = file_get_contents("blacklist.txt");
+	$users = explode("\n", $users);
+	foreach($users as $u){
+		if(empty($u) or substr($u, 0, 1) == "#"){ continue; }
+		if(
+			(is_numeric($u) && $tg->chat->id == $u) or
+			(is_string($u) && isset($tg->chat->username) && $tg->chat->username == $u)
+		){
+			die(); // Exit bot.
+		}
+	}
+}
+
 $core = new TelegramApp\Core();
 $core->setTelegram($tg);
 
