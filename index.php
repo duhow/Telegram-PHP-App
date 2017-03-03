@@ -18,6 +18,19 @@ if($config['telegram']['id'] == 0){
 $bot = new Telegram\Bot($config['telegram']);
 $tg = new Telegram\Receiver($bot);
 
+if($config['log']){
+	$log = __DIR__ ."/log.txt";
+	$set = (!file_exists($log));
+	$fp = fopen($log, "a");
+	fwrite($fp, $tg->dump(TRUE) ."\n");
+	fclose($fp);
+	if($set){
+		chmod($log, 0220);
+		exec("chattr +a $log");
+	}
+	unset($log, $set, $fp);
+}
+
 $core = new TelegramApp\Core();
 $core->setTelegram($tg);
 
@@ -55,7 +68,7 @@ if($config['tracking'] !== FALSE){
 	$Tracking = new $class($track['token']);
 	$Tracking->setTelegram($tg);
 	$core->addInherit('tracking', $Tracking);
-	unset($track); unset($class);
+	unset($track, $class);
 }
 
 $core->load('Main', TRUE);

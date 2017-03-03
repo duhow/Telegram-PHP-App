@@ -23,5 +23,8 @@ $config['mysql']['enable'] = TRUE;
 
 $config['tracking'] = FALSE;
 // $config['tracking'] = ['Botan' => 'API KEY'];
+// $config['tracking'] = ['GA' => 'UA-11111111-1'];
+
+$config['log'] = FALSE;
 
 ?>
