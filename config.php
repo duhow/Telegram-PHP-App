@@ -26,5 +26,6 @@ $config['tracking'] = FALSE;
 // $config['tracking'] = ['GA' => 'UA-11111111-1'];
 
 $config['log'] = FALSE;
+$config['repeat_updateid'] = 3;
 
 ?>
