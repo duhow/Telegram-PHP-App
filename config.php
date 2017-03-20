@@ -7,7 +7,7 @@ $config['telegram'] = [
 	'first_name'	=> 'James Bot'
 ];
 
-$config['creator'] = 0; // Telegram User ID of owner
+$config['creator'] = 0; // Telegram User ID of bot owner
 
 $config['mysql'] = [
 	'host'		=> 'localhost',
@@ -19,14 +19,14 @@ $config['mysql'] = [
 	'charset'	=> NULL
 ];
 
-$config['mysql']['enable'] = TRUE;
+$config['mysql']['enable'] = TRUE; // Enable MySQL Class / Service.
 
-$config['tracking'] = FALSE;
+$config['tracking'] = FALSE; // Tracking system to log and track bot/user actions.
 // $config['tracking'] = ['Botan' => 'API KEY'];
 // $config['tracking'] = ['GA' => 'UA-11111111-1'];
 
-$config['log'] = FALSE;
-$config['repeat_updateid'] = 3;
-$config['safe_connect'] = TRUE;
+$config['log'] = FALSE; // Log messages to file.
+$config['repeat_updateid'] = 3; // Amount of same ID messages you can receive before skipping.
+$config['safe_connect'] = TRUE; // Only accept connections from Telegram (or custom servers if specified).
 
 ?>
