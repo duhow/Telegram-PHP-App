@@ -14,6 +14,28 @@ if($config['telegram']['id'] == 0){
 	die("Please edit config.php before running.");
 }
 
+// Block unknown hosts
+// ------------
+if($config['safe_connect'] != FALSE){
+	$addr = array();
+	$pass = FALSE;
+
+	if(is_array($config['safe_connect'])){ $addr = $config['safe_connect']; }
+	$addr[] = "149.154.167."; // Add Default Telegram IP
+
+	foreach($addr as $a){
+		if(strpos($_SERVER['REMOTE_ADDR'], $a) !== FALSE){
+			$pass = TRUE; break;
+		}
+	}
+
+	if(!$pass){
+		error_log("Access denied from " .$_SERVER['REMOTE_ADDR'] ." to bot " .$config['telegram']['username']);
+		http_response_code(401);
+		die();
+	}
+}
+
 $bot = new Telegram\Bot($config['telegram']);
 $tg = new Telegram\Receiver($bot);
 

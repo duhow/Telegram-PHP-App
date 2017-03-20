@@ -27,5 +27,6 @@ $config['tracking'] = FALSE;
 
 $config['log'] = FALSE;
 $config['repeat_updateid'] = 3;
+$config['safe_connect'] = TRUE;
 
 ?>
