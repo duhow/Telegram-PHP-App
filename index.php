@@ -95,6 +95,16 @@ if(file_exists("blacklist.txt") && is_readable("blacklist.txt")){
 $core = new TelegramApp\Core();
 $core->setTelegram($tg);
 
+// Load DB class
+// ------------
+if($config['mysql']['enable']){
+	require 'libs/PHP-MySQLi-Database-Class/MysqliDb.php';
+	// require 'libs/PHP-MySQLi-Database-Class/dbObject.php';
+
+	$mysql = new MysqliDb($config['mysql']);
+	$core->setDB($mysql);
+}
+
 // Load User model
 // ------------
 if(file_exists('app/User.php')){
@@ -111,14 +121,9 @@ if(file_exists('app/Chat.php')){
 	$core->addInherit('chat', $Chat);
 }
 
-// Load DB class
+// Force add MySQL
 // ------------
 if($config['mysql']['enable']){
-	require 'libs/PHP-MySQLi-Database-Class/MysqliDb.php';
-	// require 'libs/PHP-MySQLi-Database-Class/dbObject.php';
-
-	$mysql = new MysqliDb($config['mysql']);
-	$core->setDB($mysql);
 	if($core->is_loaded('User')){ $User->setDB($mysql); }
 	if($core->is_loaded('Chat')){ $Chat->setDB($mysql); }
 }
