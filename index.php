@@ -29,6 +29,31 @@ if($config['safe_connect'] != FALSE){
 		}
 	}
 
+	$headers = apache_request_headers();
+	// Need this headers
+	$check = [
+		"Content-Type" => "application/json"
+		"Connection" => "keep-alive"
+	];
+
+	if($pass){
+		foreach($check as $h => $v){
+			$get = FALSE;
+			$h = strtolower($h);
+			// $v = strtolower($v);
+			foreach($headers as $ah => $av){
+				if($h == trim(strtolower($ah)) and $v == $av){
+					$get = TRUE;
+					break;
+				}
+			}
+			if(!$get){
+				$pass = FALSE;
+				break;
+			}
+		}
+	}
+
 	if(!$pass){
 		error_log("Access denied from " .$_SERVER['REMOTE_ADDR'] ." to bot " .$config['telegram']['username']);
 		http_response_code(401);
