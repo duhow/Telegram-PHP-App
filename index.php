@@ -32,7 +32,7 @@ if($config['safe_connect'] != FALSE){
 	$headers = apache_request_headers();
 	// Need this headers
 	$check = [
-		"Content-Type" => "application/json"
+		"Content-Type" => "application/json",
 		"Connection" => "keep-alive"
 	];
 
