@@ -64,6 +64,10 @@ if($config['safe_connect'] != FALSE){
 $bot = new Telegram\Bot($config['telegram']);
 $tg = new Telegram\Receiver($bot);
 
+if($config['ignore_older_than'] > 5 and $tg->date(TRUE) >= $config['ignore_older_than']){
+	die();
+}
+
 // Log received data
 // ------------
 if($config['log']){
