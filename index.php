@@ -174,6 +174,15 @@ if($config['tracking'] !== FALSE){
 	unset($track, $class);
 }
 
+// Add locale / string Functions
+// -----------
+if(is_dir("locale")){
+	require 'core/Strings.php';
+	$Strings = new TelegramApp\Strings($tg->language);
+	$Strings->load();
+	$core->addInherit('strings', $Strings);
+}
+
 // Run bot
 $core->load('Main', TRUE);
 

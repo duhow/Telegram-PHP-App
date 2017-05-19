@@ -13,7 +13,7 @@ class Main extends TelegramApp\Module {
 
 	private function _hello_world(){
 		$this->telegram->send
-			->text("Hello World from <b>Telegram-PHP!</b>", "HTML")
+			->text($this->strings->get("welcome"), "HTML")
 		->send();
 
 		$this->end();
@@ -21,7 +21,7 @@ class Main extends TelegramApp\Module {
 
 	protected function new_member($user){
 		$this->telegram->send
-			->text("Hello " .$user->first_name ."!")
+			->text_replace($this->strings->get("hello"), $user->first_name)
 		->send();
 	}
 }
