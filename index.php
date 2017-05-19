@@ -178,7 +178,10 @@ if($config['tracking'] !== FALSE){
 // -----------
 if(is_dir("locale")){
 	require 'core/Strings.php';
-	$Strings = new TelegramApp\Strings($tg->language);
+	$lang = $tg->language;
+	if(empty($lang)){ $lang = $config['language']; }
+
+	$Strings = new TelegramApp\Strings($lang);
 	$Strings->load();
 	$core->addInherit('strings', $Strings);
 }

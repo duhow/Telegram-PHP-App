@@ -8,6 +8,7 @@ $config['telegram'] = [
 ];
 
 $config['creator'] = 0; // Telegram User ID of bot owner
+$config['language'] = 'en'; // Default language
 
 $config['mysql'] = [
 	'host'      => 'localhost',

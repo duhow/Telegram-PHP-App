@@ -12,7 +12,7 @@ class Strings {
 			$this->language = $lang;
 		}
 
-		$this->folder = dirname(__FILE__) ."../locale/";
+		$this->folder = dirname(__FILE__) ."/../locale/";
 	}
 
 	public function get($key, $language = NULL){
