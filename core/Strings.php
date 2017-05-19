@@ -15,11 +15,45 @@ class Strings {
 		$this->folder = dirname(__FILE__) ."/../locale/";
 	}
 
-	public function get($key, $language = NULL){
+	private function exists($key, $language = NULL){
 		if(empty($language)){ $language = $this->language; }
 		$this->load($language);
-		if(isset($this->loaded[$language][$key])){ return $this->loaded[$language][$key]; }
-		return NULL;
+		if(!isset($this->loaded[$language][$key])){ return FALSE; }
+		return TRUE;
+	}
+
+	public function get($key, $language = NULL){
+		if(empty($language)){ $language = $this->language; }
+		if(!$this->exists($key, $language)){ return NULL; }
+		return $this->loaded[$language][$key];
+	}
+
+	public function get_multi($key, $index = 0, $language = NULL){
+		if(empty($language)){ $language = $this->language; }
+		if(!$this->exists($key, $language)){ return NULL; }
+
+		if($index < 0){ $index = 0; }
+		$val = $this->loaded[$language][$key];
+		if($index >= count($val)){ $index = count($val) - 1; } // Set last element.
+
+		return $val[$index];
+	}
+
+	public function get_gender($key, $male = TRUE, $language = NULL){
+		if(empty($language)){ $language = $this->language; }
+		if($male === TRUE or $male == 1 or strtolower($male) == "male"){ $male = 0; }
+		else{ $male = 1; }
+
+		return $this->get_multi($key, $male, $language);
+	}
+
+	public function get_random($key, $language = NULL){
+		if(empty($language)){ $language = $this->language; }
+		if(!$this->exists($key, $language)){ return NULL; }
+
+		$val = $this->loaded[$language][$key];
+		if(!is_array($val)){ $val = [$val]; }
+		return $val[mt_rand(0, count($val) - 1)];
 	}
 
 	public function get_all($key){
@@ -28,6 +62,22 @@ class Strings {
 			if(isset($data[$key])){ $final[$lang] = $data[$key]; }
 		}
 		return $final;
+	}
+
+	public function parse($key, $replace, $language = NULL){
+		$text = $this->get($key, $language);
+		if(empty($text)){ return NULL; }
+
+		if(strpos($text, "%s") !== FALSE){
+			if(!is_array($replace)){ $replace = [$replace]; }
+			$pos = 0;
+			foreach($replace as $r){
+				$pos = strpos($text, "%s", $pos);
+				if($pos === FALSE){ break; }
+				$text = substr_replace($text, $r, $pos, 2); // 2 = strlen("%s")
+			}
+		}
+		return $text;
 	}
 
 	public function load($language = NULL, $force = FALSE){
