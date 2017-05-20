@@ -139,6 +139,7 @@ if($config['mysql']['enable']){
 if(file_exists('app/User.php')){
 	$core->load('User');
 	$User = new User($tg->user);
+	$User->setVar('telegram', $tg);
 	$core->addInherit('user', $User);
 }
 
@@ -147,6 +148,7 @@ if(file_exists('app/User.php')){
 if(file_exists('app/Chat.php')){
 	$core->load('Chat');
 	$Chat = new Chat($tg->chat);
+	$Chat->setVar('telegram', $tg);
 	$core->addInherit('chat', $Chat);
 }
 
