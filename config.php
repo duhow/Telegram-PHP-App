@@ -9,6 +9,7 @@ $config['telegram'] = [
 
 $config['creator'] = 0; // Telegram User ID of bot owner
 $config['language'] = 'en'; // Default language
+$config['convert_emoji'] = TRUE; // Auto convert text to emoji.
 
 $config['mysql'] = [
 	'host'      => 'localhost',

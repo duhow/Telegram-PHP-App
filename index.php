@@ -68,6 +68,8 @@ if($config['ignore_older_than'] > 5 and $tg->date(TRUE) >= $config['ignore_older
 	die();
 }
 
+if(!$config['convert_emoji']){ $tg->send->convert_emoji = FALSE; }
+
 // Log received data
 // ------------
 if($config['log']){
