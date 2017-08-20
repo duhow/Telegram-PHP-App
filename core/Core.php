@@ -11,6 +11,7 @@ class Core {
 	private $loaded = array();
 	private $base_folder = NULL;
 	private $inherits = array();
+	private $timelogs = array();
 
 	function is_loaded($name){
 		$name = str_replace(".php", "", $name);
@@ -136,6 +137,16 @@ class Core {
 
 		return FALSE;
 	}
+
+	public function getTimelogs(){ return $this->timelogs; }
+
+	public function addTimelog($text = NULL, $time = TRUE){
+		if($time === TRUE){ $time = microtime(TRUE); }
+		$this->timelogs[] = [$time, $text];
+		return $this;
+	}
+
+	public function getLoaded(){ return $this->loaded; }
 
 	public function addInherit($key, $value){
 		$this->inherits[$key] = $value;

@@ -14,6 +14,9 @@ if($config['telegram']['id'] == 0){
 	die("Please edit config.php before running.");
 }
 
+$core = new TelegramApp\Core();
+// $core->addTimelog("Startup");
+
 // Block unknown hosts
 // ------------
 if($config['safe_connect'] != FALSE){
@@ -63,6 +66,7 @@ if($config['safe_connect'] != FALSE){
 
 $bot = new Telegram\Bot($config['telegram']);
 $tg = new Telegram\Receiver($bot);
+$core->setTelegram($tg);
 
 if($config['ignore_older_than'] > 5 and $tg->date(TRUE) >= $config['ignore_older_than']){
 	die();
@@ -122,9 +126,6 @@ if(file_exists("blacklist.txt") && is_readable("blacklist.txt")){
 		}
 	}
 }
-
-$core = new TelegramApp\Core();
-$core->setTelegram($tg);
 
 // Load DB class
 // ------------
@@ -190,7 +191,34 @@ if(is_dir("locale")){
 	$core->addInherit('strings', $Strings);
 }
 
+// Load modules
+foreach(scandir("app") as $file){
+	if(is_readable("app/$file") && substr($file, -4) == ".php"){
+		$name = substr($file, 0, -4);
+		if(in_array($name, ["Main", "User", "Chat"])){ continue; }
+		$core->load($name);
+	}
+}
+
+$core->addTimelog("Running");
 // Run bot
 $core->load('Main', TRUE);
+
+$core->addTimelog("Finished");
+
+if(isset($config['log_time']) and $config['log_time']){
+	$log = __DIR__ ."/logtime.txt";
+	$set = (!file_exists($log));
+
+	$times = $core->getTimelogs();
+	$start = array_shift($times);
+	$end = array_pop($times);
+	$time = ($end[0] - $start[0]);
+	$str = floor($start[0]) ." " .$tg->id ." $time\n";
+
+	$fp = fopen($log, "a");
+	fwrite($fp, $str);
+	fclose($fp);
+}
 
 ?>

@@ -28,6 +28,7 @@ $config['tracking'] = FALSE; // Tracking system to log and track bot/user action
 // $config['tracking'] = ['GA' => 'UA-11111111-1'];
 
 $config['log'] = FALSE; // Log messages to file.
+$config['log_time'] = FALSE; // Log amount of time processing the message.
 $config['repeat_updateid'] = 3; // Amount of same ID messages you can receive before skipping.
 $config['ignore_older_than'] = 300; // If message is older than X seconds, ignore.
 $config['safe_connect'] = TRUE; // Only accept connections from Telegram (or custom servers if specified).

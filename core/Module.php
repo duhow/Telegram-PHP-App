@@ -59,6 +59,14 @@ class Module {
 	public function setDB($db){ return $this->setVar('db', $db); }
 	public function setCore($core){ return $this->setVar('core', $core); }
 	public function setUser($user){ return $this->setVar('user', $user); }
+
+	public function __get($name){
+        if(in_array($name, $this->core->getLoaded())){
+            return $GLOBALS[$name];
+        }
+        return NULL;
+    }
+
 }
 
 ?>
