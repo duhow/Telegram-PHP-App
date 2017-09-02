@@ -213,7 +213,7 @@ if(isset($config['log_time']) and $config['log_time']){
 	$times = $core->getTimelogs();
 	$start = array_shift($times);
 	$end = array_pop($times);
-	$time = ($end[0] - $start[0]);
+	$time = floor(($end[0] - $start[0]) * 1000);
 	$str = floor($start[0]) ." " .$tg->id ." $time\n";
 
 	$fp = fopen($log, "a");
