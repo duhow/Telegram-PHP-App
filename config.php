@@ -32,5 +32,7 @@ $config['log_time'] = FALSE; // Log amount of time processing the message.
 $config['repeat_updateid'] = 3; // Amount of same ID messages you can receive before skipping.
 $config['ignore_older_than'] = 300; // If message is older than X seconds, ignore.
 $config['safe_connect'] = TRUE; // Only accept connections from Telegram (or custom servers if specified).
+$config['cache_memcached'] = FALSE; // Use Memcached PHP functions.
+// $config['cache_memcached'] = [['127.0.0.1', 11211, 0]];
 
 ?>

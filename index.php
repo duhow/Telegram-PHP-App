@@ -179,6 +179,16 @@ if($config['tracking'] !== FALSE){
 	unset($track, $class);
 }
 
+// Add cache (currently Memcached)
+// ------------
+if($config['cache_memcached'] !== FALSE){
+	$Cache = new Memcached("TGAPP" .$config['telegram']['id']);
+	if(!count($Cache->getServerList())){
+		$Cache->addServers($config['cache_memcached']);
+	}
+	$core->addInherit('cache', $Cache);
+}
+
 // Add locale / string Functions
 // -----------
 if(is_dir("locale")){
