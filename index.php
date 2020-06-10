@@ -24,7 +24,15 @@ if($config['safe_connect'] != FALSE){
 	$pass = FALSE;
 
 	if(is_array($config['safe_connect'])){ $addr = $config['safe_connect']; }
-	$addr[] = "149.154.167."; // Add Default Telegram IP
+	// Add Default Telegram IP
+	// Updated in https://core.telegram.org/bots/webhooks
+	for($ip = 160; $ip <= 175; $ip++){
+        $addr[] = "149.154.${ip}.";
+	}
+	$addr[] = "91.108.4.";
+	$addr[] = "91.108.5.";
+	$addr[] = "91.108.6.";
+	$addr[] = "91.108.7.";
 
 	foreach($addr as $a){
 		if(strpos($_SERVER['REMOTE_ADDR'], $a) !== FALSE){
