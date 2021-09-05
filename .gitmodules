@@ -1,6 +1,7 @@
 [submodule "libs/Telegram-PHP"]
 	path = libs/Telegram-PHP
 	url = https://github.com/duhow/Telegram-PHP
+	branch = master
 [submodule "libs/PHP-MySQLi-Database-Class"]
 	path = libs/PHP-MySQLi-Database-Class
 	url = https://github.com/joshcam/PHP-MySQLi-Database-Class
